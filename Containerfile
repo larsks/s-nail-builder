@@ -1,4 +1,4 @@
-FROM docker.io/alpine:3
+FROM docker.io/alpine:3 AS builder
 
 RUN apk add alpine-sdk
 
@@ -17,3 +17,7 @@ EOF
 #COPY ./ .
 
 RUN make citron VAL_SID= VAL_MAILX=mail OPT_COLOUR=no OPT_MTA_ALIASES=no OPT_NET=no OPT_MLE=no OPT_ERRORS=no
+
+FROM docker.io/alpine:3
+
+COPY --from=builder /usr/local/bin/ /usr/local/bin/
