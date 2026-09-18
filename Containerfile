@@ -1,6 +1,6 @@
 FROM docker.io/alpine:3 AS builder
 
-RUN apk add alpine-sdk
+RUN apk add gcc make git musl-dev
 
 WORKDIR /build
 RUN git clone https://git.sdaoden.eu/scm/s-nail.git
