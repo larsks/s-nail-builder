@@ -1,7 +1,7 @@
-From aae09c27fdd5b1c297ea81fa2982a38477159d20 Mon Sep 17 00:00:00 2001
+From 0b6e40da2db919a23c7079085c73f8e376f7a31b Mon Sep 17 00:00:00 2001
 From: Lars Kellogg-Stedman <lars@oddbit.com>
 Date: Thu, 17 Sep 2026 20:42:30 -0400
-Subject: [PATCH 3/3] Move su_RANDOM_SEED_* constants
+Subject: [PATCH 3/4] Move su_RANDOM_SEED_* constants
 
 The su_RANDOM_SEED_* constants were defined only in src/su/random.c, but
 conditional code in other translation units used them via the header.

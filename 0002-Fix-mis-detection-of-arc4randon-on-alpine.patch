@@ -1,8 +1,16 @@
-From f1d7d74f27ae67e39e8dd3b113fca6dd7e3eb9b7 Mon Sep 17 00:00:00 2001
+From b265eaf3985d47f083ac851069b72ae4bf26e93a Mon Sep 17 00:00:00 2001
 From: Lars Kellogg-Stedman <lars@oddbit.com>
 Date: Thu, 17 Sep 2026 20:31:53 -0400
-Subject: [PATCH 2/3] Fix mis-detection of arc4randon on alpine
+Subject: [PATCH 2/4] Fix mis-detection of arc4randon on alpine
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
+Alpine uses musl, and the configuration probe in mk/make-config.sh tested
+arc4random() with only <stdlib.h>. It incorrectly concluded that the ARC4
+backend was usable, while the actual source—including mx/nail.h—could not
+see a declaration. The probe was fixed to use the same header context as
+the real build.
 ---
  mk/make-config.sh | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
