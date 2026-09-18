@@ -1,9 +1,12 @@
 FROM docker.io/alpine:3 AS builder
 
+ARG SNAIL_BASE_COMMIT=1ac85e0102363f1b3db62ee6f31263fdae4c6472
+
 RUN apk add gcc make git musl-dev
 
 WORKDIR /build
-RUN git clone https://git.sdaoden.eu/scm/s-nail.git
+RUN git clone https://git.sdaoden.eu/scm/s-nail.git && \
+  git -c advice.detachedHead=false -C s-nail checkout $SNAIL_BASE_COMMIT
 WORKDIR /build/s-nail
 COPY *.patch ./
 RUN <<EOF
