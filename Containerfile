@@ -16,7 +16,16 @@ EOF
 #WORKDIR /build/s-nail
 #COPY ./ .
 
-RUN make citron VAL_SID= VAL_MAILX=mail OPT_COLOUR=no OPT_MTA_ALIASES=no OPT_NET=no OPT_MLE=no OPT_ERRORS=no
+RUN make citron \
+  VAL_SID= \
+  VAL_MAILX=mail \
+  OPT_COLOUR=no \
+  OPT_MTA_ALIASES=no \
+  OPT_NET=no \
+  OPT_MLE=no \
+  OPT_ERRORS=no \
+  VAL_SYSCONFDIR=/etc \
+  VAL_SYSCONFRC=mail.rc
 
 FROM docker.io/alpine:3
 
