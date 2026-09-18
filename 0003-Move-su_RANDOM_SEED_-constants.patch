@@ -1,0 +1,52 @@
+From aae09c27fdd5b1c297ea81fa2982a38477159d20 Mon Sep 17 00:00:00 2001
+From: Lars Kellogg-Stedman <lars@oddbit.com>
+Date: Thu, 17 Sep 2026 20:42:30 -0400
+Subject: [PATCH 3/3] Move su_RANDOM_SEED_* constants
+
+The su_RANDOM_SEED_* constants were defined only in src/su/random.c, but
+conditional code in other translation units used them via the header.
+---
+ include/su/code.h | 8 ++++++++
+ src/su/random.c   | 7 -------
+ 2 files changed, 8 insertions(+), 7 deletions(-)
+
+diff --git a/include/su/code.h b/include/su/code.h
+index befbee3c..90d6e74a 100644
+--- a/include/su/code.h
++++ b/include/su/code.h
+@@ -186,6 +186,14 @@
+ # define su_PAGE_SIZE /*!< \_ */
+ #endif
+ 
++/* Possible su_RANDOM_SEED values.  These are needed by users of the
++ * generated configuration as well as by the random implementation. */
++#define su_RANDOM_SEED_BUILTIN 0
++#define su_RANDOM_SEED_GETENTROPY 1
++#define su_RANDOM_SEED_GETRANDOM 2
++#define su_RANDOM_SEED_URANDOM 3
++#define su_RANDOM_SEED_HOOK 4
++
+ /*! @} *//* CONFIG }}} */
+ 
+ /*!
+diff --git a/src/su/random.c b/src/su/random.c
+index c309c0f7..3c3f10da 100644
+--- a/src/su/random.c
++++ b/src/su/random.c
+@@ -21,13 +21,6 @@
+ 
+ #include "su/code.h"
+ 
+-/* Possible su_RANDOM_SEED values: */
+-#define su_RANDOM_SEED_BUILTIN 0
+-#define su_RANDOM_SEED_GETENTROPY 1
+-#define su_RANDOM_SEED_GETRANDOM 2
+-#define su_RANDOM_SEED_URANDOM 3
+-#define su_RANDOM_SEED_HOOK 4
+-
+ #ifndef su_RANDOM_SEED
+ # define su_RANDOM_SEED su_RANDOM_SEED_BUILTIN
+ #endif
+-- 
+2.55.0
+

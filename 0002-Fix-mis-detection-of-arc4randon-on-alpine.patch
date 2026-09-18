@@ -1,0 +1,34 @@
+From f1d7d74f27ae67e39e8dd3b113fca6dd7e3eb9b7 Mon Sep 17 00:00:00 2001
+From: Lars Kellogg-Stedman <lars@oddbit.com>
+Date: Thu, 17 Sep 2026 20:31:53 -0400
+Subject: [PATCH 2/3] Fix mis-detection of arc4randon on alpine
+
+---
+ mk/make-config.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/mk/make-config.sh b/mk/make-config.sh
+index 55d55aaf..e9700e0c 100644
+--- a/mk/make-config.sh
++++ b/mk/make-config.sh
+@@ -3319,7 +3319,7 @@ val_random_arc4() {
+ 		'#define su_RANDOM_SEED su_RANDOM_SEED_HOOK
+ 		#define su_RANDOM_HOOK_FUN mx_random_hook
+ 		#define mx_RANDOM_SEED_HOOK 1' << \!
+-#include <stdlib.h>
++#include <mx/nail.h>
+ int main(void){
+ 	char buf[4];
+ 	arc4random_buf(buf, sizeof buf);
+@@ -3332,7 +3332,7 @@ int main(void){
+ 		'#define su_RANDOM_SEED su_RANDOM_SEED_HOOK
+ 		#define su_RANDOM_HOOK_FUN mx_random_hook
+ 		#define mx_RANDOM_SEED_HOOK 2' << \!
+-#include <stdlib.h>
++#include <mx/nail.h>
+ int main(void){
+ 	arc4random();
+ 	return 0;
+-- 
+2.55.0
+
